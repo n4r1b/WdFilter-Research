@@ -397,10 +397,16 @@ typedef struct _MP_PROCESS_CB_NOTIFY
   HANDLE ProcessId;
   HANDLE ParentId;
   PUNICODE_STRING ImageFileName;
-  int OperationType;
+  MP_NOTIFY_CB_OPERATION_TYPE OperationType;
   char ProcessFlags;
 } MP_PROCESS_CB_NOTIFY, *PMP_PROCESS_CB_NOTIFY;
 
+enum MP_NOTIFY_CB_OPERATION_TYPE
+{
+  ProcessCreation = 0x1,
+  ProcessTermination = 0x2,
+  SetProcessInfo = 0x3,
+};
 
 struct  MP_PROCESS_EXCLUDED
 {
