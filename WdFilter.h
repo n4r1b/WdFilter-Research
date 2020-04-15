@@ -554,24 +554,69 @@ typedef struct _MP_REG_DATA_ENTRY
   UNICODE_STRING RegKeyName;
 } MP_REG_DATA_ENTRY, *PMP_REG_DATA_ENTRY;
 
-typedef struct _MP_REG_MATCHING_INFO
+typedef struct _MP_REG_MATCH_INFO
 {
-  unsigned int Size;
-  _DWORD dword4;
-  PVOID pvoid8;
-  char field_10;
-  __declspec(align(4)) char field_14;
-  char field_15;
-  char field_16;
-} MP_REG_MATCHING_INFO, *PMP_REG_MATCHING_INFO;
+  unsigned int HashesCount;
+  _DWORD HashesArrayLen;
+  _OWORD (*HashesArray)[];
+  char KeyValueInfoFlag;
+  int KeyRules;
+
+} MP_REG_MATCH_INFO, *PMP_REG_MATCH_INFO;
+
+typedef struct _MP_CLIENT_VALUE
+{
+  PMP_CLIENT_VALUE NextClientValue;
+  BYTE ValueHash[16];
+  int KeyRules;
+} MP_CLIENT_VALUE, *PMP_CLIENT_VALUE;
+
+typedef struct _MP_KEY_VALUE
+{
+  PMP_KEY_VALUE NextKeyValue;
+  PWSTR KeyValueName;
+  PMP_CLIENT_VALUE ClientValue;
+} MP_KEY_VALUE, *PMP_KEY_VALUE;
 
 typedef struct _MP_KEY_ENTRY
 {
-  MP_KEY_ENTRY *SubKey;
-  MP_KEY_ENTRY *NextKey;
+  PMP_KEY_ENTRY SubKey;
+  PMP_KEY_ENTRY NextKey;
   PWSTR KeyName;
-  USHORT field_18;
-  __int64 field_20;
-  PVOID field_28;
+  USHORT KeysToSkip;
+  PMP_CLIENT_VALUE ClientList;
+  PMP_KEY_VALUE ValueList;
 } MP_KEY_ENTRY, *PMP_KEY_ENTRY;
+
+typedef struct _MP_REG_USER_DATA
+{
+  int DataSize;
+  int NumberOfEntries;
+  PMP_KEY_ENTRY MonitoredKeys;
+  __int64 SomeCrcOrSig;
+} MP_REG_USER_DATA, *PMP_REG_USER_DATA;
+
+
+enum MP_REG_RULES
+{
+  CreateKeyOperation = 0x1,
+  RenameKeyOperation = 0x4,
+  DeleteKeyOperation = 0x10,
+  SetValueKeyOperation = 0x100,
+  SetValueRetrieveKeyValueInfo = 0x400,
+  DeleteValueKeyOperation = 0x800,
+  DeleteValueRetrieveKeyValueInfo = 0x2000,
+  RestoreKeyOperation = 0x4000,
+  ReplaceKeyOperation = 0x8000,
+  CreateDenied = 0x10000,
+  RenameDenied = 0x20000,
+  DeleteDenied = 0x40000,
+  SetValueDenied = 0x80000,
+  ReplaceDenied = 0x100000,
+  RestoreDenied = 0x200000,
+  TamperProtectionActive = 0x400000,
+  Unk = 0x800000,
+  Unk1 = 0x1000000,
+};
+
 

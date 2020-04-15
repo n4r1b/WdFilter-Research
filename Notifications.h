@@ -258,3 +258,24 @@ struct ReplyAsyncMessage
   __int64 field_50;
   __int64 field_58;
 };
+
+// Reg Notification
+
+struct RegNotification
+{
+  PVOID KeyObject;
+  PUNICODE_STRING KeyName;
+  PUNICODE_STRING ValueName;
+  PUNICODE_STRING NewKeyName;
+  PUNICODE_STRING OldFileName;
+  PUNICODE_STRING NewFileName;
+  int ValueType;
+  int ValueDataSize;
+  __int64 ValueData;
+  int NewValueType;
+  int NewValueDataSize;
+  _DWORD RegRestoreFlags;
+  PVOID NewValueData;
+  int FinalKeyRules;
+  MP_REG_MATCH_INFO *MatchInfo;
+};

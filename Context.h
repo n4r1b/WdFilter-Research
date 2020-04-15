@@ -76,10 +76,10 @@ typedef struct _KeyCtx
   USHORT Magic;
   USHORT Size;
   PVOID FreeKeyCtx;
-  __int64 gap10;
-  __int64 field_18;
-  __int64 field_20;
+  __int64 CurrentThread;
+  __int64 KeyName;
   union TypeOfOperation Operation;
+
 
 } KeyCtx, *PKeyCtx;
 
@@ -94,39 +94,31 @@ union TypeOfOperation : __int32
 
 struct CreateKeyCtx
 {
-  _QWORD RegKeyName;
-  _QWORD RegMatchingInfo;
-  __int64 field_38;
+  PMP_REG_MATCH_INFO MatchInfo;
 };
 
 struct  RenameKeyCtx
 {
-  _QWORD RegKeyName;
-  _QWORD RegMatchingInfo;
-  _QWORD RegData;
+  PUNICODE_STRING RegKeyName;
+  PMP_REG_MATCH_INFO MatchInfo;
 };
 
 struct  SetValueKeyCtx
 {
-  _QWORD RegKeyName;
-  _QWORD KeyValuePartialInfo;
+  PKEY_VALUE_PARTIAL_INFORMATION KeyValueInfo;
   _DWORD KeyType;
-  _QWORD RegMatchingInfo;
+  PMP_REG_MATCH_INFO MatchInfo;
 };
 
 struct  DeleteValueKeyCtx
 {
-  _QWORD RegKeyName;
-  _QWORD RegMatchingInfo;
-  PVOID KeyValuePartialInfo;
-  _QWORD qword40;
+  PUNICODE_STRING ValueName;
+  PMP_REG_MATCH_INFO MatchInfo;
 };
 
 struct  DeleteKeyCtx
 {
-  _QWORD qword28;
-  _QWORD RegKeyName;
-  PMP_REG_MATCHING_INFO MatchingInfo;
+  PMP_REG_MATCHING_INFO MatchInfo;
 };
 
 
